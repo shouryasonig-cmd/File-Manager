@@ -1,0 +1,246 @@
+# file manager
+
+filelist = []
+
+# Creating database file if it does not exist
+
+db = open("database.txt", "a")
+db.close()
+
+
+def createproject():
+
+    print('\n\n~ Create File ~')
+
+    db = open("database.txt", "r")
+    content = db.readlines()
+    db.close()
+
+    print("\n Recent Files --> ")
+    print(content)
+
+    filename = input("\n Enter The New file name --> ").strip()
+
+    try:
+        fp = open(filename, "r")
+        fp.close()
+
+        print("\n File Already Exist ")
+
+    except FileNotFoundError:
+
+        fp = open(filename, "w")
+        print(f"\n{filename} File Created Successfully ! ")
+        fp.close()
+
+        db = open("database.txt", 'a')
+        filelist.append(filename)
+        db.write(f" | {filename}\n")
+        db.close()
+        filelist.clear()
+
+        print('\n\nThanks For Accessing File Manager')
+
+
+def read():
+
+    print('\n\n~ Read ~')
+
+    print("\n\n Recent Files --> ")
+
+    db = open("database.txt", "r")
+    content = db.readlines()
+    print(content)
+    db.close()
+
+    Ofile = input('\nSelect The File you Want To Read --> ').strip()
+
+    try:
+
+        fp = open(Ofile, "r")
+        print(f'\nReadable File {Ofile}')
+
+        content = fp.read()
+
+        print(f"\n The content from file : {content} ")
+
+        fp.close()
+
+    except FileNotFoundError:
+
+        print(f"\nThe File With Name {Ofile} Does Not Exist In File Manager ")
+        print('Thanks For Accessing File Manager')
+
+
+def write():
+
+    print('\n\n~ Wipe And Write ~')
+
+    print("\n\n Recent Files --> ")
+
+    db = open("database.txt", "r")
+    content = db.readlines()
+    print(content)
+    db.close()
+
+    Ofile = input('\nSelect The File you Want To Wipe And Write --> ').strip()
+
+    try:
+
+        fp = open(Ofile, "r")
+        fp.close()
+
+        content = input('\n\nEnter The New Content You Want To Add --> ')
+
+        fp = open(Ofile, "w")
+        fp.write(content)
+        fp.close()
+
+        print("\n Content Successfully Saved In ", Ofile)
+
+    except FileNotFoundError:
+
+        print(f"\nThe File With Name {Ofile} Does Not Exist In File Manager ")
+
+        print('Do You Want To Try Again With Another Name Or Create A New File With Same Name ? ')
+
+        print('\n\nA = Try Again')
+        print('B = Create A New File')
+
+        operation = input("\n Select input --> ")
+
+        if operation.upper() == 'A':
+
+            write()
+
+        elif operation.upper() == 'B':
+
+            createproject()
+            write()
+
+        else:
+
+            print('\nThe Selected Operation Does Not Exist')
+            print('Thanks For Accessing File Manager')
+
+
+def update():
+
+    print('\n\n~ Update ~')
+
+    print("\n\n Recent Files --> ")
+
+    db = open("database.txt", "r")
+    content = db.readlines()
+    print(content)
+    db.close()
+
+    Ofile = input('\nSelect The File you Want To Update --> ').strip()
+
+    try:
+
+        fp = open(Ofile, "r")
+        fp.close()
+
+        content = input('\n Enter The New Content You Want To Update --> ')
+
+        fp = open(Ofile, "a")
+        fp.write(content)
+        fp.close()
+
+        print("\n Content Successfully Saved In ", Ofile)
+
+    except FileNotFoundError:
+
+        print(f"\nThe File With Name {Ofile} Does Not Exist In File Manager ")
+
+        print('Do You Want To Try Again With Another Name Or Create A New File With Same Name ? ')
+
+        print('\n\nA = Try Again')
+        print('B = Create A New File')
+
+        operation = input("\n Select input --> ")
+
+        if operation.upper() == 'A':
+
+            update()
+
+        elif operation.upper() == 'B':
+
+            createproject()
+            update()
+
+        else:
+
+            print('\n\nThe Selected Operation Does Not Exist')
+            print('Thanks For Accessing File Manager')
+
+
+def Exit():
+
+    print('\n\nThe Selected Operation Does Not Exist')
+    print('Thanks For Accessing File Manager')
+    print('\n\n\t\t\t\t\t\t\t### EXIT ###')
+
+    exit()
+
+
+''' Main Logic of Code '''
+
+
+while True:
+
+    print('\n\n\n\n\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~|')
+    print('\t\t\t\t\t\t| Welcome To File Manager |')
+    print('\t\t\t\t\t\t|~~~~~~~~~~~~~~~~~~~~~~~~~|')
+
+    print('\n\nA = Create File')
+    print('B = Open File')
+    print('C = EXIT')
+
+    operation = input('\nEnter The Operation You Want To Perform --> ')
+
+    if operation.upper() == 'A':
+
+        createproject()
+
+    elif operation.upper() == 'B':
+
+        print('\n\n~ Open File ~')
+
+        print('\nA = Read')
+        print('B = Wipe And Write')
+        print('C = Update')
+        print('D = EXIT')
+
+        operation = input('\nEnter The Operation You Want To Perform --> ')
+
+        if operation.upper() == 'A':
+
+            read()
+
+        elif operation.upper() == 'B':
+
+            write()
+
+        elif operation.upper() == 'C':
+
+            update()
+
+        elif operation.upper() == 'D':
+
+            Exit()
+
+        else:
+
+            print('The Selected Operation Does Not Exist')
+            print('Thanks For Accessing File Manager')
+
+    elif operation.upper() == 'C':
+
+        Exit()
+
+    else:
+
+        print('The Selected Operation Does Not Exist')
+        print('Thanks For Accessing File Manager')
